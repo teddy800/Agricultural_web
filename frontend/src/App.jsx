@@ -14,7 +14,7 @@ import {
 const crops = [
   { id: 1, name: "Teff", am: "ጤፍ", price: 3800, unit: "quintal", region: "Haramaya, Oromia", qty: 50, seller: "Tewodros Fikadu", image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=900&q=85", tag: "Popular" },
   { id: 2, name: "Coffee", am: "ቡና", price: 12500, unit: "quintal", region: "Yirgacheffe, Sidama", qty: 20, seller: "Selam Tesfaye", image: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=900&q=85", tag: "High demand" },
-  { id: 3, name: "Maize", am: "በቆሎ", price: 1850, unit: "quintal", region: "Dire Dawa", qty: 100, seller: "Mohammed Ali", image: "https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=900&q=80", tag: "Fresh" },
+  { id: 3, name: "Maize", am: "በቆሎ", price: 1850, unit: "quintal", region: "Dire Dawa", qty: 100, seller: "Mohammed Ali", image: "https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=900&q=80", tag: "Fresh" },
   { id: 4, name: "Wheat", am: "ስንዴ", price: 2200, unit: "quintal", region: "Addis Ababa", qty: 30, seller: "Kebede Tadesse", image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=900&q=85", tag: "New harvest" },
   { id: 5, name: "Tomatoes", am: "ቲማቲም", price: 1450, unit: "quintal", region: "Bishoftu, Oromia", qty: 18, seller: "Hana Bekele", image: "https://images.unsplash.com/photo-1546094096-0df4bcaaa337?auto=format&fit=crop&w=900&q=85", tag: "Fresh" },
   { id: 6, name: "Haricot beans", am: "ባቄላ", price: 4200, unit: "quintal", region: "Arba Minch", qty: 40, seller: "Abebe Girma", image: "https://images.unsplash.com/photo-1611171711912-e0521d59e086?w=900&q=80", tag: "Quality" }

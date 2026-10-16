@@ -12,12 +12,12 @@ import {
 } from "recharts";
 
 const crops = [
-  { id: 1, name: "Teff", am: "ጤፍ", price: 3800, unit: "quintal", region: "Haramaya, Oromia", qty: 50, seller: "Tewodros Fikadu", image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=900&q=85", tag: "Popular" },
-  { id: 2, name: "Coffee", am: "ቡና", price: 12500, unit: "quintal", region: "Yirgacheffe, Sidama", qty: 20, seller: "Selam Tesfaye", image: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=900&q=85", tag: "High demand" },
-  { id: 3, name: "Maize", am: "በቆሎ", price: 1850, unit: "quintal", region: "Dire Dawa", qty: 100, seller: "Mohammed Ali", image: "https://images.unsplash.com/photo-1601593768792-3f4f0d8c3c74?auto=format&fit=crop&w=900&q=85", tag: "Fresh" },
-  { id: 4, name: "Wheat", am: "ስንዴ", price: 2200, unit: "quintal", region: "Addis Ababa", qty: 30, seller: "Kebede Tadesse", image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=900&q=85", tag: "New harvest" },
-  { id: 5, name: "Tomatoes", am: "ቲማቲም", price: 1450, unit: "quintal", region: "Bishoftu, Oromia", qty: 18, seller: "Hana Bekele", image: "https://images.unsplash.com/photo-1546094096-0df4bcaaa337?auto=format&fit=crop&w=900&q=85", tag: "Fresh" },
-  { id: 6, name: "Haricot beans", am: "ባቄላ", price: 4200, unit: "quintal", region: "Arba Minch", qty: 40, seller: "Abebe Girma", image: "https://images.unsplash.com/photo-1515543904379-3d7579598965?auto=format&fit=crop&w=900&q=85", tag: "Quality" }
+  { id: 1, name: "Teff", am: "ጤፍ", price: 3800, unit: "quintal", region: "Haramaya, Oromia", qty: 50, seller: "Tewodros Fikadu", image: "https://images.unsplash.com/photo-1569396116180-eb8cb90912d7?w=800&q=80", tag: "Popular" },
+  { id: 2, name: "Coffee", am: "ቡና", price: 12500, unit: "quintal", region: "Yirgacheffe, Sidama", qty: 20, seller: "Selam Tesfaye", image: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=800&q=80", tag: "High demand" },
+  { id: 3, name: "Maize", am: "በቆሎ", price: 1850, unit: "quintal", region: "Dire Dawa", qty: 100, seller: "Mohammed Ali", image: "https://images.unsplash.com/photo-1603048297172-c92544798d5a?w=800&q=80", tag: "Fresh" },
+  { id: 4, name: "Wheat", am: "ስንዴ", price: 2200, unit: "quintal", region: "Addis Ababa", qty: 30, seller: "Kebede Tadesse", image: "https://images.unsplash.com/photo-1595855759920-86582396756a?w=800&q=80", tag: "New harvest" },
+  { id: 5, name: "Tomatoes", am: "ቲማቲም", price: 1450, unit: "quintal", region: "Bishoftu, Oromia", qty: 18, seller: "Hana Bekele", image: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=800&q=80", tag: "Fresh" },
+  { id: 6, name: "Haricot beans", am: "ባቄላ", price: 4200, unit: "quintal", region: "Arba Minch", qty: 40, seller: "Abebe Girma", image: "https://images.unsplash.com/photo-1589927986089-35812388d1f4?w=800&q=80", tag: "Quality" }
 ];
 const trendData = [
   { date: "Apr 20", Haramaya: 3400, Harar: 3050, "Dire Dawa": 2800, Merkato: 2900 },
@@ -144,10 +144,21 @@ function Dashboard({ go, setSelected }) {
   </>;
 }
 function Marketplace({ crops: items, cropFilter, setCropFilter, regionFilter, setRegionFilter, onSelect, go }) {
+  const handleImageError = (e) => {
+    e.target.style.display = 'none';
+    const parent = e.target.parentElement;
+    if (!parent.querySelector('.image-fallback')) {
+      const fallback = document.createElement('div');
+      fallback.className = 'image-fallback';
+      fallback.innerHTML = `<svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#078345" stroke-width="2"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="10"/></svg>`;
+      parent.appendChild(fallback);
+    }
+  };
+
   return <>
     <PageHeading eyebrow="BUY & SELL PRODUCE" title="Marketplace" subtitle="Discover agricultural produce offered by farmers across Ethiopia." action="Sell produce" onAction={() => go("Create Listing")}/>
     <div className="filter-bar"><div className="filter-title"><SlidersHorizontal size={17}/> Filters</div><label>Crop<select value={cropFilter} onChange={e=>setCropFilter(e.target.value)}><option>All crops</option>{crops.map(c=><option key={c.id}>{c.name}</option>)}</select></label><label>Region<select value={regionFilter} onChange={e=>setRegionFilter(e.target.value)}><option>All regions</option><option>Oromia</option><option>Sidama</option><option>Dire Dawa</option><option>Addis Ababa</option></select></label><button className="button-quiet" onClick={()=>{setCropFilter("All crops");setRegionFilter("All regions");}}>Clear filters</button><span className="results-count">{items.length} products</span></div>
-    {items.length ? <div className="market-grid">{items.map(c=><article className="product-card" key={c.id}><div className="product-image"><img src={c.image} alt={c.name}/><span className="product-tag">{c.tag}</span><button className="favorite" aria-label={`Save ${c.name}`} onClick={e=>e.currentTarget.classList.toggle("saved")}>♡</button></div><div className="product-body"><div className="product-category">GRAINS & PRODUCE</div><h3>{c.name} <span>{c.am}</span></h3><div className="product-location"><MapPin size={14}/>{c.region}</div><div className="product-qty"><Package size={14}/> {c.qty} quintal available</div><div className="product-price"><strong>{money(c.price)}</strong><span>/ quintal</span></div><div className="product-footer"><span className="seller-dot">{c.seller.split(" ").map(x=>x[0]).join("").slice(0,2)}</span><span className="seller-name">{c.seller}</span><span className="verified"><ShieldCheck size={14}/> Listed</span></div><button className="button-primary full" onClick={()=>onSelect(c)}>View details <ArrowUpRight size={15}/></button></div></article>)}</div> : <div className="empty-state"><ShoppingBasket size={35}/><h3>No matching produce</h3><p>Try changing your crop or region filters.</p></div>}
+    {items.length ? <div className="market-grid">{items.map(c=><article className="product-card" key={c.id}><div className="product-image"><img src={c.image} alt={c.name} onError={handleImageError} loading="lazy"/><span className="product-tag">{c.tag}</span><button className="favorite" aria-label={`Save ${c.name}`} onClick={e=>e.currentTarget.classList.toggle("saved")}>♡</button></div><div className="product-body"><div className="product-category">GRAINS & PRODUCE</div><h3>{c.name} <span>{c.am}</span></h3><div className="product-location"><MapPin size={14}/>{c.region}</div><div className="product-qty"><Package size={14}/> {c.qty} quintal available</div><div className="product-price"><strong>{money(c.price)}</strong><span>/ quintal</span></div><div className="product-footer"><span className="seller-dot">{c.seller.split(" ").map(x=>x[0]).join("").slice(0,2)}</span><span className="seller-name">{c.seller}</span><span className="verified"><ShieldCheck size={14}/> Listed</span></div><button className="button-primary full" onClick={()=>onSelect(c)}>View details <ArrowUpRight size={15}/></button></div></article>)}</div> : <div className="empty-state"><ShoppingBasket size={35}/><h3>No matching produce</h3><p>Try changing your crop or region filters.</p></div>}
     <p className="demo-note">Listings and prices are illustrative sample data for the first UI milestone.</p>
   </>;
 }
